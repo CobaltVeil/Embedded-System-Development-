@@ -1,5 +1,5 @@
-Embedded System Development Question That I Met 
-0. C C++ Python
+#### Embedded System Development
+0. C
 1. STM32F4 STM32CubeMax_MDK
 2. FreeRTOS
 3. NearLink
@@ -7,3 +7,4 @@ Embedded System Development Question That I Met
 5. Bluetooth
 6. Protocol
 7. Linux
+8. MarkDown
