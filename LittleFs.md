@@ -1,0 +1,20 @@
+## This documentation is based on the implementation of MCU porting LittleFs
+### 0. LittleFs的功能和特点
+LittleFs的主要特点为：实现了均衡损耗与掉电安全。
+### 1. LittleFs源码解读
+
+### 2. 基于STM32F407ZET6MCU移植LittleFs文件系统
+  STM32裸机对于程序的执行以前后台方式来实现，对于STM32的MCU而言，移植文件系统有两种方案，移植到MCU内部Flash或者外部的SPI Flash上，此处我先以内部
+Flash作为嵌入式场景的移植案例。
+#### 2.1 移植架构分析
+  首先分析整体架构，STM32原本操作内部Flash的方式为，使用标准库或HAL库中提供的函数，按照Flash操作流程直接进行操作；移植文件系统以后意味着在以后的工程
+中，我们可以通过文件系统来操作MCU内部的Flash，以这种方式操作可以兼具LittleFs均衡损耗与掉电安全的特性。
+原先的方式 Main(应用) -> HAL/STD Funs(驱动) ->MCU Flash(硬件)
+
+  我们的目标就是基于STM32CubeMax实现一个工程基座，通过移植文件系统(lfs.c lfs.h lfs_util.c lfs_util.h)相关源码，并创建文件lfs_port.c实现作为文件
+系统和原本HAL/STD操作Flash的适配层功能。
+移植后方案 Main(应用) -> LittleFs Funs(系统) ->.read = lfs_flash_read(以read为例，实现在lfs_port.c中) -> HAL/STD Funs ->MCU Flash
+#### 2.2 具体适配实现
+适配工作以struct lfs_config 为核心展开：
+用HAL/STD Lib完成四个操作函数(read prog earse sync)，并用指针对四个操作函数进行指向；对硬件参数和性能参数进行配置；
+另外需要确认,1. 为LittleFs提供静态缓冲区; 2. 在函数操作里(适配层lfs_port.c); 3. 做地址保护,sync错误码返回的意义。
