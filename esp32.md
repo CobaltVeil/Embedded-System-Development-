@@ -131,7 +131,8 @@ NVS非易失性存储 (Non-Volatile Storage)实现的价值在于：
 
 
 **Q5：NVS的功能看起来和LittleFS的非常类似，二者有什么样的关系**
-<img width="819" height="603" alt="图片" src="https://github.com/user-attachments/assets/f4dacafa-324c-43cc-aaa4-af2b42748c2e" />
+<img width="841" height="555" alt="图片" src="https://github.com/user-attachments/assets/f311cd5d-1192-416b-ba0e-7d008835f70f" />
+
 NVS是乐鑫在ESP-IDF中提供的一个**轻量级键值对存储库**，专门用于存储小型的、频繁读写的配置参数。
 
 
